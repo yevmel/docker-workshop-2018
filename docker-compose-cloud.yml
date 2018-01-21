@@ -1,0 +1,40 @@
+version: '3.3'
+
+services:
+    mysql:
+        image: mysql
+        ports:
+            - 3306:3306
+        env_file:
+          - docker-compose.env/mysql.properties
+
+    zipkin:
+        image: openzipkin/zipkin
+        ports:
+            - 9411:9411
+
+    eureka:
+        image: 192.168.99.102:5000/eureka
+        environment:
+          - SERVER_PORT=8080
+
+    cars:
+        image: 192.168.99.102:5000/cars
+        ports:
+            - 8080:8080
+        env_file:
+          - docker-compose.env/cars.properties
+
+    locations:
+        image: 192.168.99.102:5000/locations
+        ports:
+            - 8081:8080
+        env_file:
+          - docker-compose.env/locations.properties
+
+    maintenance:
+        build: ./services/maintenance
+        ports:
+            - 8082:8080
+        env_file:
+          - docker-compose.env/maintenance.properties

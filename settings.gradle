@@ -1,0 +1,8 @@
+rootProject.name = 'poc'
+
+include 'services:cars'
+include 'services:maintenance'
+include 'services:locations'
+include 'infra:eureka'
+include 'infra:zipkin'
+

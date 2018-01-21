@@ -1,0 +1,22 @@
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    // web
+    compile 'org.springframework.boot:spring-boot-starter-web:2.0.0.M6'
+
+    // tracing
+    compile 'org.springframework.cloud:spring-cloud-starter-sleuth:2.0.0.M4'
+    compile 'org.springframework.cloud:spring-cloud-starter-zipkin2:2.0.0.M4'
+
+    // service discovery
+    compile 'org.springframework.cloud:spring-cloud-starter-eureka:2.0.0.M2'
+
+    // data access
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa:2.0.0.M6'
+    compile 'mysql:mysql-connector-java:5.1.+'
+    compile 'org.hsqldb:hsqldb:2.4.+'
+}
