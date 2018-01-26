@@ -259,3 +259,51 @@ spec:
     component: locations
 status:
   loadBalancer: {}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: workshop
+    component: maintenance
+  name: maintenance
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: workshop
+        component: maintenance
+    spec:
+      containers:
+      - env:
+        - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+          value: "http://eureka:8080/eureka"
+        - name: SERVER_PORT
+          value: "8080"
+        image: marcopaga/docker-workshop-maintenance
+        name: maintenance
+        ports:
+        - containerPort: 8080
+        resources: {}
+      restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: workshop
+    component: maintenance
+  name: maintenance
+spec:
+  ports:
+  - name: "8082"
+    port: 8082
+    targetPort: 8080
+  selector:
+    app: workshop
+    component: maintenance
+status:
+  loadBalancer: {}
