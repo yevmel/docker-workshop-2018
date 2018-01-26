@@ -152,4 +152,64 @@ spec:
     component: eureka
 status:
   loadBalancer: {}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: workshop
+    component: cars
+  name: cars
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: workshop
+        component: cars
+    spec:
+      containers:
+      - env:
+        - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+          value: "http://eureka:8080/eureka"
+        - name: SERVER_PORT
+          value: "8080"
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_PASSWORD
+        - name: SPRING_DATASOURCE_URL
+          value: "jdbc:mysql://mysql:3306/cars"
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_USER
+        image: marcopaga/docker-workshop-cars
+        name: cars
+        resources: {}
+      restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: workshop
+    component: cars
+  name: cars
+spec:
+  clusterIP: None
+  ports:
+  - name: headless
+    port: 55555
+    targetPort: 0
+  selector:
+    app: workshop
+    component: cars
+status:
+  loadBalancer: {}
 
