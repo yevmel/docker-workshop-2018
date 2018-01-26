@@ -212,4 +212,50 @@ spec:
     component: cars
 status:
   loadBalancer: {}
-
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: workshop
+    component: locations
+  name: locations
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: workshop
+        component: locations
+    spec:
+      containers:
+      - env:
+        - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+          value: "http://eureka:8080/eureka"
+        - name: SERVER_PORT
+          value: "8080"
+        image:  marcopaga/docker-workshop-locations
+        name: locations
+        ports:
+        - containerPort: 8080
+        resources: {}
+      restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: workshop
+    component: locations
+  name: locations
+spec:
+  ports:
+  - name: "8081"
+    port: 8081
+    targetPort: 8080
+  selector:
+    app: workshop
+    component: locations
+status:
+  loadBalancer: {}
