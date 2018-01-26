@@ -251,6 +251,7 @@ metadata:
     component: locations
   name: locations
 spec:
+  type: NodePort
   ports:
   - name: "8081"
     port: 8081
@@ -299,6 +300,7 @@ metadata:
     component: maintenance
   name: maintenance
 spec:
+  type: NodePort
   ports:
   - name: "8082"
     port: 8082
