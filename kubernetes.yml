@@ -54,7 +54,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql-service
+  name: mysql
   labels:
     app: workshop
 spec:
@@ -143,9 +143,10 @@ metadata:
     component: eureka
   name: eureka
 spec:
+  type: NodePort
   ports:
-  - name: "8082"
-    port: 8082
+  - name: "8080"
+    port: 8080
     targetPort: 8080
   selector:
     app: workshop
