@@ -65,3 +65,45 @@ spec:
   ports:
   - port: 3306
     targetPort: 3306
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: workshop
+    component: zipkin
+  name: zipkin
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: workshop
+        component: zipkin
+    spec:
+      containers:
+      - image: openzipkin/zipkin
+        name: zipkin
+        ports:
+        - containerPort: 9411
+        resources: {}
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: workshop
+    component: zipkin
+  name: zipkin
+spec:
+  ports:
+  - name: "9411"
+    port: 9411
+    targetPort: 9411
+  selector:
+    app: workshop
+    component: zipkin
+status:
+  loadBalancer: {}
+
