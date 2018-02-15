@@ -15,7 +15,6 @@ services:
 
     eureka:
         build: ./infra/eureka
-        image: marcopaga/docker-workshop-eureka
         ports:
           - 8082:8080
         environment:
@@ -23,7 +22,6 @@ services:
 
     cars:
         build: ./services/cars
-        image: marcopaga/docker-workshop-cars
         env_file:
           - docker-compose.env/cars.properties
 
@@ -36,8 +34,7 @@ services:
 
     maintenance:
         build: ./services/maintenance
-        image: marcopaga/docker-workshop-maintenance
         ports:
-            - 8082:8080
+            - 8083:8080
         env_file:
           - docker-compose.env/maintenance.properties
