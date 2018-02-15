@@ -17,7 +17,7 @@ cmake-build-debug/
 ## Plugin-specific files:
 
 # IntelliJ
-/out/
+out/
 
 # JIRA plugin
 atlassian-ide-plugin.xml
