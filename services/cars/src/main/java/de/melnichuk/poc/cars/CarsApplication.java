@@ -23,6 +23,10 @@ public class CarsApplication {
 
     @PostConstruct
     public void setupTestData() {
+        if (cars.count() > 0) {
+            return;
+        }
+
         final List<String> locations = Arrays.asList("Solingen", "Leverkusen", "Erkrath", "Leichlingen", "Langenfeld");
 
         for (int i = 0; i < 15; i++) {
