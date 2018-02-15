@@ -1,5 +1,5 @@
 FROM   openjdk:8-jre-alpine
-ADD    build/libs/maintenance.jar /
+ADD    build/libs/maintenance.jar /app.jar
 EXPOSE 8080
-CMD    java -Djava.security.egd=file:/dev/./urandom -jar /maintenance.jar
-
+ENV JAVA_OPTS="-Xms64m -Xmx256m"
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar" ]
