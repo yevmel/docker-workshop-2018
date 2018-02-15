@@ -16,6 +16,7 @@ metadata:
   labels:
     app: workshop
     component: mysql
+    type: infra
   name: mysql
 spec:
   replicas: 1
@@ -57,6 +58,8 @@ metadata:
   name: mysql
   labels:
     app: workshop
+    component: mysql
+    type: infra
 spec:
   type: NodePort
   selector:
@@ -72,6 +75,7 @@ metadata:
   labels:
     app: workshop
     component: zipkin
+    type: infra
   name: zipkin
 spec:
   replicas: 1
@@ -95,8 +99,10 @@ metadata:
   labels:
     app: workshop
     component: zipkin
+    type: infra
   name: zipkin
 spec:
+  type: NodePort
   ports:
   - name: "9411"
     port: 9411
@@ -113,6 +119,7 @@ metadata:
   labels:
     app: workshop
     component: eureka
+    type: infra
   name: eureka
 spec:
   replicas: 1
@@ -122,6 +129,7 @@ spec:
       labels:
         app: workshop
         component: eureka
+        type: infra
     spec:
       containers:
       - env:
@@ -141,6 +149,7 @@ metadata:
   labels:
     app: workshop
     component: eureka
+    type: infra
   name: eureka
 spec:
   type: NodePort
@@ -160,6 +169,7 @@ metadata:
   labels:
     app: workshop
     component: cars
+    type: service
   name: cars
 spec:
   replicas: 1
@@ -170,6 +180,7 @@ spec:
       labels:
         app: workshop
         component: cars
+        type: service
     spec:
       containers:
       - env:
@@ -189,6 +200,8 @@ spec:
             secretKeyRef:
               name: mysql-secret
               key: MYSQL_USER
+        - name: SPRING_ZIPKIN_BASEURL
+          value: http://zipkin:9411
         image: marcopaga/docker-workshop-cars
         name: cars
         resources: {}
@@ -201,6 +214,7 @@ metadata:
   labels:
     app: workshop
     component: cars
+    type: service
   name: cars
 spec:
   clusterIP: None
@@ -220,6 +234,7 @@ metadata:
   labels:
     app: workshop
     component: locations
+    type: service
   name: locations
 spec:
   replicas: 1
@@ -235,6 +250,8 @@ spec:
           value: "http://eureka:8080/eureka"
         - name: SERVER_PORT
           value: "8080"
+        - name: SPRING_ZIPKIN_BASEURL
+          value: http://zipkin:9411
         image:  marcopaga/docker-workshop-locations
         name: locations
         ports:
@@ -249,6 +266,7 @@ metadata:
   labels:
     app: workshop
     component: locations
+    type: service
   name: locations
 spec:
   type: NodePort
@@ -268,6 +286,7 @@ metadata:
   labels:
     app: workshop
     component: maintenance
+    type: service
   name: maintenance
 spec:
   replicas: 1
@@ -284,6 +303,8 @@ spec:
           value: "http://eureka:8080/eureka"
         - name: SERVER_PORT
           value: "8080"
+        - name: SPRING_ZIPKIN_BASEURL
+          value: http://zipkin:9411
         image: marcopaga/docker-workshop-maintenance
         name: maintenance
         ports:
@@ -298,6 +319,7 @@ metadata:
   labels:
     app: workshop
     component: maintenance
+    type: service
   name: maintenance
 spec:
   type: NodePort

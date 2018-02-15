@@ -1,10 +1,13 @@
 ## kubernetes on minikube
 
 ```
+minikube start --vm-driver virtualbox --memory 4096 --cpus 3
 
-kubectl create -f kubernetes.yml
+kubectl apply -f kubernetes.yml
 
-open $(minikube service locations --url)/locations
+http $(minikube service locations --url)/locations 
+
+http $(minikube service locations --url)/locations/Solingen
 
 http $(minikube service maintenance --url)/update?firmwareVersion=2
 
