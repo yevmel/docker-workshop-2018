@@ -172,7 +172,7 @@ metadata:
     type: service
   name: cars
 spec:
-  replicas: 1
+  replicas: 2
   strategy: {}
   template:
     metadata:

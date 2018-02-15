@@ -9,10 +9,18 @@ http $(minikube service locations --url)/locations
 
 http $(minikube service locations --url)/locations/Solingen
 
-http $(minikube service maintenance --url)/update?firmwareVersion=2
+http "$(minikube service maintenance --url)/update?firmwareVersion=2"
 
 http $(minikube service maintenance --url)/metrics
-
 kubectl delete pod,service,deployment,secret -l app=workshop
+
+```
+
+# Infrastructure Service
+
+```
+minikube service eureka
+
+minikube service zipkin
 
 ```
